@@ -9,6 +9,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+
   adminer:
     image: adminer:5.2.1
     environment:
@@ -21,6 +22,15 @@ services:
       - db
     volumes:
       - ./adminer/adminer.css:/var/www/html/adminer.css
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - db
 
 volumes:
   pgdata:
