@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    environment:
+      ADMINER_DESIGN: galkaev
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
