@@ -10,13 +10,18 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   adminer:
-    image: adminer
+    image: adminer:5.2.1
     environment:
-      ADMINER_DESIGN: galkaev
+      ADMINER_DEFAULT_DB_DRIVER: postgresql
+      ADMINER_DEFAULT_DB_HOST: db
+      ADMINER_DEFAULT_DB_NAME: postgres
     ports:
       - 8080:8080
     depends_on:
       - db
+    volumes:
+      - ./adminer/adminer.css:/var/www/html/adminer.css
 
 volumes:
   pgdata:
+  adminer:
