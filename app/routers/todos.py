@@ -6,7 +6,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-fake_todos_db = fake_todos_db = {
+fake_todos_db = {
     "1": {"task": "Buy groceries", "is_complete": True, "created_at": "2025-05-17T00:00:00Z"},
     "2": {"task": "Complete project report", "is_complete": False, "created_at": "2025-05-17T00:00:00Z"},
     "3": {"task": "Schedule dentist appointment", "is_complete": False, "created_at": "2025-05-17T00:00:00Z"},
