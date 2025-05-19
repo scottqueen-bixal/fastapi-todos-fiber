@@ -1,22 +1,12 @@
-from datetime import datetime
-
-from sqlalchemy import func
-from sqlalchemy.orm import Mapped, mapped_column
-
+from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from app.db import Base
+import datetime
 
+class Todos(Base):
+    __tablename__ = "todos"
 
-class Todo(Base):
-    __tablename__ = "todo"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    task: Mapped[str]
-
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(
-        server_default=func.now(), onupdate=func.now()
-    )
-    deleted_at: Mapped[datetime | None]
-
-    def __repr__(self) -> str:
-        return f"Todo(id={self.id})"
+    id = Column(Integer, primary_key=True, index=True)
+    task = Column(String, nullable=False)
+    is_completed = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)

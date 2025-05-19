@@ -1,8 +1,11 @@
-from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.orm import Session
+from typing import Annotated
+
+from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.db import get_async_db_session
-from app.models import Todos
-# from app.schemas import TodoCreate, TodoUpdate
+from app.models.Todos import Todos
+from app.schemas.Todos import CreateTodo
 
 
 router = APIRouter(
@@ -11,14 +14,17 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.get("/")
-async def read_items(db: Session = Depends(get_async_db_session)):
-    todos = db.query(Todos).all()
-    return todos
-
-@router.get("/{todo_id}")
-async def read_item(todo_id: int, db: Session = Depends(get_async_db_session)):
-    todo = db.query(Todos).filter(Todos.id == todo_id).first()
-    if not todo:
-        raise HTTPException(status_code=404, detail="Item not found")
-    return todo
+@router.post("", summary="Create a new todo")
+async def create_todo(
+    db: Annotated[AsyncSession, Depends(get_async_db_session)],
+    request_data: CreateTodo,
+) -> CreateTodo:
+    todo = Todos(task=request_data.task, is_completed=request_data.is_completed)
+    db.add(todo)
+    await db.commit()
+    await db.refresh(todo)
+    return CreateTodo(
+        id=todo.id,
+        task=todo.task,
+        is_completed=todo.is_completed,
+    )

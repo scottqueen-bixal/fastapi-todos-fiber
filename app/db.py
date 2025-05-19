@@ -1,8 +1,7 @@
 import datetime
 from typing import AsyncGenerator
-from . import settings
 
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, MetaData
 from sqlalchemy.ext.asyncio import (
     AsyncAttrs,
     AsyncSession,
@@ -10,8 +9,8 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import MetaData
 
+from app import settings
 
 
 class Base(AsyncAttrs, DeclarativeBase):
@@ -38,6 +37,7 @@ engine = create_async_engine(
 )
 
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
+
 
 async def get_async_db_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_session_maker() as session:

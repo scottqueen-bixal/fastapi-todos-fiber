@@ -22,13 +22,5 @@ def get_env_var(key: str, default: str | _NoArg = NO_ARG) -> str:
 
         return default
 
-PG_HOST = get_env_var("DB_HOST")
-PG_PORT = get_env_var("DB_PORT")
-PG_USER = get_env_var("POSTGRES_USER")
-PG_PASSWORD = get_env_var("POSTGRES_PASSWORD")
-PG_DB = get_env_var("POSTGRES_DB")
-
-SQLALCHEMY_DATABASE_URL = (
-    f"postgresql+asyncpg://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/{PG_DB}"
-)
+SQLALCHEMY_DATABASE_URL = "postgresql+asyncpg://db_user:password@db:5432/postgres"
 SQLALCHEMY_ECHO = get_env_var("SQLALCHEMY_ECHO", "") == "true"
