@@ -22,5 +22,5 @@ def get_env_var(key: str, default: str | _NoArg = NO_ARG) -> str:
 
         return default
 
-SQLALCHEMY_DATABASE_URL = "postgresql+asyncpg://db_user:password@db:5432/postgres"
+SQLALCHEMY_DATABASE_URL = get_env_var("SQLALCHEMY_DATABASE_URL")
 SQLALCHEMY_ECHO = get_env_var("SQLALCHEMY_ECHO", "") == "true"
