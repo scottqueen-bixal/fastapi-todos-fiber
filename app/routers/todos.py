@@ -1,4 +1,9 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+from app.db import get_async_db_session
+from app.models import Todos
+# from app.schemas import TodoCreate, TodoUpdate
+
 
 router = APIRouter(
     prefix="/todos",
@@ -6,21 +11,14 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-fake_todos_db = {
-    "1": {"task": "Buy groceries", "is_complete": True, "created_at": "2025-05-17T00:00:00Z"},
-    "2": {"task": "Complete project report", "is_complete": False, "created_at": "2025-05-17T00:00:00Z"},
-    "3": {"task": "Schedule dentist appointment", "is_complete": False, "created_at": "2025-05-17T00:00:00Z"},
-    "4": {"task": "Call mom", "is_complete": False, "created_at": "2025-05-17T00:00:00Z"},
-    "5": {"task": "Plan weekend trip", "is_complete": False, "created_at": "2025-05-17T00:00:00Z"},
-}
-
-
 @router.get("/")
-async def read_items():
-    return fake_todos_db
+async def read_items(db: Session = Depends(get_async_db_session)):
+    todos = db.query(Todos).all()
+    return todos
 
 @router.get("/{todo_id}")
-async def read_item(todo_id: str):
-    if todo_id not in fake_todos_db:
+async def read_item(todo_id: int, db: Session = Depends(get_async_db_session)):
+    todo = db.query(Todos).filter(Todos.id == todo_id).first()
+    if not todo:
         raise HTTPException(status_code=404, detail="Item not found")
-    return fake_todos_db[todo_id]
+    return todo

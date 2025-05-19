@@ -6,9 +6,12 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.15.2",
+    "asyncpg>=0.30.0",
     "fastapi[standard]>=0.115.12",
     "psycopg2-binary>=2.9.10",
+    "pydantic>=2.11.4",
+    "sqlalchemy[asyncio]>=2.0.41",
 ]
 
 [tool.uv.workspace]
-members = ["alembic"]
+members = []
