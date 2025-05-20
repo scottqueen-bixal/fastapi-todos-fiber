@@ -13,13 +13,17 @@ adminer/
     adminer.css
 app/
     __init__.py
+    db.py
     dependencies.py
     main.py
-    internal/
-        admin.py
     routers/
-        items.py
-        users.py
+        todos.py
+    schemas/
+        Todos.py
+migrations/
+    env.py
+    versions/
+entrypoint.sh
 ```
 
 ## Services
@@ -27,11 +31,13 @@ app/
 ### Database (PostgreSQL)
 - **Image**: `postgres`
 - **Environment Variables**:
-  - `POSTGRES_USER`: `app_user`
+  - `POSTGRES_USER`: `db_user`
   - `POSTGRES_PASSWORD`: `password`
   - `POSTGRES_DB`: `postgres`
 - **Volumes**:
   - `pgdata:/var/lib/postgresql/data`
+- **Ports**:
+  - `5432:5432`
 
 ### Adminer
 - **Image**: `adminer:latest`
@@ -51,15 +57,35 @@ app/
   - `8000:80`
 - **Depends On**:
   - `db`
+- **Entrypoint**:
+  - `entrypoint.sh`: Handles database readiness, Alembic migrations, and application startup.
 
 ## FastAPI Application
 The FastAPI application is located in the `app` directory and follows a modular structure:
 
 - `main.py`: Entry point of the application.
+- `db.py`: Database configuration and session management.
 - `dependencies.py`: Contains shared dependencies.
-- `internal/admin.py`: Internal admin routes.
-- `routers/items.py`: Routes for managing items.
-- `routers/users.py`: Routes for managing users.
+- `routers/todos.py`: Routes for managing todos.
+- `schemas/Todos.py`: Pydantic models for todos.
+
+## Migrations
+Alembic is used for database migrations. The migration files are located in the `migrations/versions/` directory.
+
+### Running Migrations
+To create a new migration:
+```bash
+docker-compose exec backend uv run alembic revision --autogenerate -m "migration message"
+```
+
+To apply migrations:
+```bash
+docker-compose exec backend uv run alembic upgrade head
+```
+
+```bash
+docker-compose cp backend:/app/alembic/versions ./alembic
+```
 
 ## How to Run
 1. Ensure Docker and Docker Compose are installed on your system.
