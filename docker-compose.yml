@@ -25,7 +25,7 @@ services:
     networks:
       - internal
 
-  app:
+  backend:
     build:
       context: .
     ports:
