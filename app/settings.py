@@ -22,5 +22,6 @@ def get_env_var(key: str, default: str | _NoArg = NO_ARG) -> str:
 
         return default
 
-SQLALCHEMY_DATABASE_URL = get_env_var("SQLALCHEMY_DATABASE_URL")
+
+SQLALCHEMY_DATABASE_URL = get_env_var("DATABASE_URL")
 SQLALCHEMY_ECHO = get_env_var("SQLALCHEMY_ECHO", "") == "true"
