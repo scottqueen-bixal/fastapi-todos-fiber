@@ -54,7 +54,7 @@ entrypoint.sh
 - **Build Context**: `.`
 - **Dockerfile**: `Dockerfile`
 - **Ports**:
-  - `8000:80`
+  - `8000:8000`
 - **Depends On**:
   - `db`
 - **Entrypoint**:

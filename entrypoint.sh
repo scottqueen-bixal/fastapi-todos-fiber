@@ -10,4 +10,4 @@ done;
 /app/.venv/bin/alembic upgrade head
 
 # Start the FastAPI application
-/app/.venv/bin/fastapi run ./app/main.py --port 80
+/app/.venv/bin/fastapi run ./backend/main.py --port 8000
