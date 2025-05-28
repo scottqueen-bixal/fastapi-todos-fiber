@@ -2,11 +2,12 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import text
+from sqlalchemy import text, select
 
 from app.db import get_async_db_session
 from app.models.Todos import Todos
-from app.schemas.Todos import CreateTodo
+from app.schemas.Todos import CreateTodo, UpdateTodo
+from app.utils import update_field
 
 
 router = APIRouter(
@@ -65,4 +66,29 @@ async def create_todo(
         id=todo.id,
         task=todo.task,
         is_completed=todo.is_completed,
+    )
+
+
+@router.put("/{todo_id}", summary="Update a todo")
+async def update_todo(
+    db: Annotated[AsyncSession, Depends(get_async_db_session)],
+    todo_id: int,
+    request_data: UpdateTodo,
+) -> UpdateTodo:
+    stmt = select(Todos).where(Todos.id == todo_id)
+    todo = (await db.execute(stmt)).scalar()
+    if todo is None:
+        raise HTTPException(status_code=404, detail="Todo not found")
+
+    for field, value in request_data:
+        update_field(todo, field, value)
+
+    await db.commit()
+    await db.refresh(todo)
+    return UpdateTodo(
+        id=todo.id,
+        task=todo.task,
+        is_completed=todo.is_completed,
+        created_at=todo.created_at,
+        updated_at=todo.updated_at,
     )
