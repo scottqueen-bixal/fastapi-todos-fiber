@@ -92,3 +92,20 @@ async def update_todo(
         created_at=todo.created_at,
         updated_at=todo.updated_at,
     )
+
+
+@router.delete("/{todo_id}", summary="Delete a todo by ID")
+async def delete_todo(
+    db: Annotated[AsyncSession, Depends(get_async_db_session)],
+    todo_id: int,
+) -> dict:
+    # Check if the todo exists
+    stmt = select(Todos).where(Todos.id == todo_id)
+    todo = (await db.execute(stmt)).scalar()
+    if todo is None:
+        raise HTTPException(status_code=404, detail="Todo not found")
+
+    await db.delete(todo)
+    await db.commit()
+
+    return {"message": f"Todo with ID {todo_id} successfully deleted"}
