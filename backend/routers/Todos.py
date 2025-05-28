@@ -109,3 +109,17 @@ async def delete_todo(
     await db.commit()
 
     return {"message": f"Todo with ID {todo_id} successfully deleted"}
+
+
+@router.get("", summary="Get all todos")
+async def get_all_todos(
+    db: Annotated[AsyncSession, Depends(get_async_db_session)],
+) -> list[dict]:
+    stmt = select(Todos)
+    result = await db.execute(stmt)
+    todos = result.scalars().all()
+
+    return [
+        {"id": todo.id, "task": todo.task, "is_completed": todo.is_completed}
+        for todo in todos
+    ]

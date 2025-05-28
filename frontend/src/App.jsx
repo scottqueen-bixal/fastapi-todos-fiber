@@ -1,16 +1,36 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
+const todosPath = "http://localhost:8000/todos";
+
 function App() {
-  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState(() => []);
+
+  const getTodos = async () => {
+    try {
+      const response = await fetch(todosPath, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch todos");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+    }
+  };
 
   const createTodo = async (task) => {
     const newTodo = { task };
 
     try {
-      const response = await fetch("http://localhost:8000/todos", {
+      const response = await fetch(todosPath, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,47 +43,33 @@ function App() {
       }
 
       const data = await response.json();
+      setTodos((prevTodos) => [...prevTodos, data]);
       console.log("Todo created successfully:", data);
     } catch (error) {
       console.error("Error creating todo:", error);
     }
   };
 
+  // Lazy fetch todos after component mounts
   useEffect(() => {
-    // This effect runs once when the component mounts
-    createTodo(`TEST Todo ${count}`);
-    console.log("App component mounted");
-
-    // Cleanup function to run when the component unmounts
-    return () => {
-      console.log("App component unmounted");
+    const fetchTodos = async () => {
+      const data = await getTodos();
+      setTodos(data);
     };
-  }, [count]);
+
+    fetchTodos();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-        <button onClick={createTodo}>Create Todo</button>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="todo-app">
+      <button onClick={() => createTodo("TEST Todo")}>Create Todo</button>
+      {todos.length > 0 &&
+        todos.map((todo, index) => (
+          <div key={index}>
+            <p>{todo.task}</p>
+          </div>
+        ))}
+    </div>
   );
 }
 
