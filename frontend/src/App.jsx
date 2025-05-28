@@ -20,7 +20,8 @@ function App() {
       }
 
       const data = await response.json();
-      return data;
+      setTodos((prevTodos) => [...prevTodos, ...data]);
+      console.info("Todos fetched successfully:", data);
     } catch (error) {
       console.error("Error fetching todos:", error);
     }
@@ -42,9 +43,9 @@ function App() {
         throw new Error("Failed to create todo");
       }
 
-      const data = await response.json();
-      setTodos((prevTodos) => [...prevTodos, data]);
-      console.log("Todo created successfully:", data);
+      const todo = await response.json();
+      setTodos((prevTodos) => [...prevTodos, todo]);
+      console.info("Todo created successfully:", todo);
     } catch (error) {
       console.error("Error creating todo:", error);
     }
@@ -52,12 +53,7 @@ function App() {
 
   // Lazy fetch todos after component mounts
   useEffect(() => {
-    const fetchTodos = async () => {
-      const data = await getTodos();
-      setTodos(data);
-    };
-
-    fetchTodos();
+    getTodos();
   }, []);
 
   return (
