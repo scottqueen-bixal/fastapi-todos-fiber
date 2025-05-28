@@ -4,8 +4,8 @@ from logging.config import fileConfig
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
-from app import settings
-from app.models import Todos
+from backend import settings
+from backend.models import Todos
 
 from alembic import context
 
@@ -24,7 +24,7 @@ config.set_main_option("sqlalchemy.url", settings.SQLALCHEMY_DATABASE_URL)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from app.db import Base
+from backend.db import Base
 
 target_metadata = Base.metadata
 

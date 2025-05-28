@@ -37,9 +37,22 @@ services:
     networks:
       - internal
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+      - node_modules:/app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
 networks:
   internal:
     driver: bridge
 
 volumes:
   pgdata:
+  node_modules:
