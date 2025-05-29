@@ -10,7 +10,7 @@ class Todos(Base):
     task = Column(String, nullable=False)
     is_completed = Column(Boolean, default=False)
     is_seed_data = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(
-        DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow
+        DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
     )
