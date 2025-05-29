@@ -62,8 +62,8 @@ async def create_todo(
     db.add(todo)
     await db.commit()
     await db.refresh(todo)
+
     return CreateTodo(
-        id=todo.id,
         task=todo.task,
         is_completed=todo.is_completed,
     )
@@ -120,6 +120,15 @@ async def get_all_todos(
     todos = result.scalars().all()
 
     return [
-        {"id": todo.id, "task": todo.task, "is_completed": todo.is_completed}
+        {
+            "id": todo.id,
+            "task": todo.task,
+            "is_completed": todo.is_completed,
+            "created_at": todo.created_at,
+            "updated_at": todo.updated_at,
+            "is_seed_data": todo.is_seed_data,
+        }
         for todo in todos
     ]
+
+    # return todos
