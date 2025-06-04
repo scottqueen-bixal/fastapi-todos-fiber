@@ -16,7 +16,6 @@ function App() {
     inputTask.current.focus();
   };
 
-  // Lazy fetch todos after component mounts
   useEffect(() => {
     getTodos(setTodos);
   }, []);
