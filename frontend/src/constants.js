@@ -1,1 +1,2 @@
-export const todosPath = "http://localhost:8000/todos";
+export const origin = import.meta.env.VITE_BASE_URL;
+export const todosPath = `http://${origin}/api/todos`;
