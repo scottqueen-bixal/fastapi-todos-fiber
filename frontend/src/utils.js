@@ -39,8 +39,7 @@ export const createTodo = async (task, setTodos) => {
       throw new Error("Failed to create todo");
     }
 
-    const todo = await response.json();
-    setTodos((prevTodos) => [...prevTodos, todo]);
+    getTodos(setTodos);
   } catch (error) {
     console.error("Error creating todo:", error);
   }
@@ -62,10 +61,7 @@ export const updateTodo = async (updatedTodo, setTodos) => {
       throw new Error("Failed to update todo");
     }
 
-    const todo = await response.json();
-    setTodos((prevTodos) =>
-      prevTodos.map((t) => (t.id === id ? { ...t, ...todo } : t))
-    );
+    getTodos(setTodos);
   } catch (error) {
     console.error("Error updating todo:", error);
   }
@@ -84,7 +80,7 @@ export const deleteTodo = async (id, setTodos) => {
       throw new Error("Failed to delete todo");
     }
 
-    setTodos((prevTodos) => prevTodos.filter((t) => t.id !== id));
+    getTodos(setTodos);
   } catch (error) {
     console.error("Error deleting todo:", error);
   }
