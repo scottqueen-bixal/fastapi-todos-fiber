@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef, useMemo } from "react";
-import TodoList from "./components/TodoList";
+import { useEffect, useState, useRef, useMemo, lazy, Suspense } from "react";
 import { getTodos, createTodo } from "./utils";
 import "./App.css";
+
+const TodoList = lazy(() => import("./components/TodoList"));
 
 function App() {
   const [todos, setTodos] = useState(() => []);
@@ -26,7 +27,9 @@ function App() {
         <input ref={inputTask} />
         <button type="submit">Create Todo</button>
       </form>
-      <TodoList todos={memoizedTodos} setTodos={setTodos} />
+      <Suspense fallback={<div>Loading Todos...</div>}>
+        <TodoList todos={memoizedTodos} setTodos={setTodos} />
+      </Suspense>
     </div>
   );
 }
