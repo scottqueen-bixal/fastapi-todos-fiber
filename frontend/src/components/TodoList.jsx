@@ -1,34 +1,38 @@
 import Todo from "./Todo";
 import { updateTodo, deleteTodo } from "../utils";
 
-const TodoList = ({ todos, setTodos }) => {
+const TodoList = ({ todos, setTodos, rowVirtualizer }) => {
+  {
+    /* Only the visible items in the virtualizer, manually positioned to be in view */
+  }
   return (
     <div className="todos">
       <div className="todo-list">
-        {todos.map(
-          (todo) =>
-            !todo.is_completed && (
-              <Todo
-                key={todo.id}
-                todo={todo}
-                onToggle={(todo) => updateTodo(todo, setTodos)}
-                onDelete={() => deleteTodo(todo.id, setTodos)}
-              />
-            )
-        )}
-      </div>
-      <div className="completed-list">
-        {todos.map(
-          (todo) =>
-            todo.is_completed && (
-              <Todo
-                key={todo.id}
-                todo={todo}
-                onToggle={(todo) => updateTodo(todo, setTodos)}
-                onDelete={() => deleteTodo(todo.id, setTodos)}
-              />
-            )
-        )}
+        {rowVirtualizer.getVirtualItems().map((virtualItem) => {
+          const item = todos[virtualItem.index];
+          return (
+            <div
+              key={`todo-${virtualItem.key}`}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: `${virtualItem.size}px`,
+                transform: `translateY(${virtualItem.start}px)`,
+              }}
+            >
+              {!item.is_completed && (
+                <Todo
+                  key={`todo-${item.id}`}
+                  todo={item}
+                  onToggle={(item) => updateTodo(item, setTodos)}
+                  onDelete={() => deleteTodo(item.id, setTodos)}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
