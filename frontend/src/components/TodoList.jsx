@@ -22,14 +22,12 @@ const TodoList = ({ todos, setTodos, rowVirtualizer }) => {
                 transform: `translateY(${virtualItem.start}px)`,
               }}
             >
-              {!item.is_completed && (
-                <Todo
-                  key={`todo-${item.id}`}
-                  todo={item}
-                  onToggle={(item) => updateTodo(item, setTodos)}
-                  onDelete={() => deleteTodo(item.id, setTodos)}
-                />
-              )}
+              <Todo
+                key={`todo-${item.id}`}
+                todo={item}
+                onToggle={(item) => updateTodo(item, setTodos)}
+                onDelete={() => deleteTodo(item.id, setTodos)}
+              />
             </div>
           );
         })}
