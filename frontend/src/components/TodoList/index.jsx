@@ -1,6 +1,6 @@
 import Todo from "../Todo";
 import { updateTodo, deleteTodo } from "../../utils";
-import "./TodoList.css";
+import "./index.css";
 
 const TodoList = ({ todos, setTodos, rowVirtualizer }) => {
   {
