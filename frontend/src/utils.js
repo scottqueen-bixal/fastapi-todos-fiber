@@ -1,6 +1,8 @@
+// This file contains utility functions for fetching, creating, updating, and deleting todos.
+// It uses the Fetch API to interact with a backend service.
 import { todosPath } from "./constants";
 
-export const getTodos = async (setTodos) => {
+const getTodos = async (setTodos) => {
   try {
     const response = await fetch(todosPath, {
       method: "GET",
@@ -20,7 +22,7 @@ export const getTodos = async (setTodos) => {
   }
 };
 
-export const createTodo = async (task, setTodos) => {
+const createTodo = async (task, setTodos) => {
   const newTodo = { task };
 
   try {
@@ -42,7 +44,7 @@ export const createTodo = async (task, setTodos) => {
   }
 };
 
-export const updateTodo = async (updatedTodo, setTodos) => {
+const updateTodo = async (updatedTodo, setTodos) => {
   const { id } = updatedTodo;
 
   try {
@@ -64,7 +66,7 @@ export const updateTodo = async (updatedTodo, setTodos) => {
   }
 };
 
-export const deleteTodo = async (id, setTodos) => {
+const deleteTodo = async (id, setTodos) => {
   try {
     const response = await fetch(`${todosPath}/${id}`, {
       method: "DELETE",
@@ -82,3 +84,5 @@ export const deleteTodo = async (id, setTodos) => {
     console.error("Error deleting todo:", error);
   }
 };
+
+export { getTodos, createTodo, updateTodo, deleteTodo };
