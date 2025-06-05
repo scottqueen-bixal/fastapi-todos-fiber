@@ -1,5 +1,6 @@
 import Todo from "./Todo";
 import { updateTodo, deleteTodo } from "../utils";
+import "./TodoList.css";
 
 const TodoList = ({ todos, setTodos, rowVirtualizer }) => {
   {
@@ -12,14 +13,11 @@ const TodoList = ({ todos, setTodos, rowVirtualizer }) => {
           const item = todos[virtualItem.index];
           return (
             <div
+              className="virtual-item"
               key={`todo-${virtualItem.key}`}
               style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: `${virtualItem.size}px`,
-                transform: `translateY(${virtualItem.start}px)`,
+                "--virtual-item-height": `${virtualItem.size}px`,
+                "--virtual-item-translate-y": `${virtualItem.start}px`,
               }}
             >
               <Todo

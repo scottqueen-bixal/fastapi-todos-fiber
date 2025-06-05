@@ -1,0 +1,9 @@
+.virtual-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Dynamically set */
+  height: var(--virtual-item-height);
+  transform: translateY(var(--virtual-item-translate-y));
+}
