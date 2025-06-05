@@ -1,6 +1,7 @@
 import Todo from "./Todo";
+import { updateTodo, deleteTodo } from "../utils";
 
-const TodoList = ({ todos, setTodos, updateTodo, deleteTodo }) => {
+const TodoList = ({ todos, setTodos }) => {
   return (
     <div className="todos">
       <div className="todo-list">

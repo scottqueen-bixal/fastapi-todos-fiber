@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 import TodoList from "./components/TodoList";
-import { getTodos, createTodo, updateTodo, deleteTodo } from "./utils";
+import { getTodos, createTodo } from "./utils";
 import "./App.css";
 
 function App() {
@@ -29,8 +29,8 @@ function App() {
       <TodoList
         todos={memoizedTodos}
         setTodos={setTodos}
-        updateTodo={updateTodo}
-        deleteTodo={deleteTodo}
+        // updateTodo={updateTodo}
+        // deleteTodo={deleteTodo}
       />
     </div>
   );
