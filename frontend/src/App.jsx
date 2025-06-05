@@ -26,12 +26,7 @@ function App() {
         <input ref={inputTask} />
         <button type="submit">Create Todo</button>
       </form>
-      <TodoList
-        todos={memoizedTodos}
-        setTodos={setTodos}
-        // updateTodo={updateTodo}
-        // deleteTodo={deleteTodo}
-      />
+      <TodoList todos={memoizedTodos} setTodos={setTodos} />
     </div>
   );
 }
