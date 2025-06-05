@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useRef, useCallback, useLayoutEffect, useReducer } from "react";
 
 /**
  * A custom hook that ensures a dispatch function is only called if the component is still mounted.
@@ -6,29 +6,36 @@ import * as React from "react";
  * @returns {Function} A wrapped version of the dispatch function that checks if the component is mounted.
  */
 const useSafeDispatch = (dispatch) => {
-  const mounted = React.useRef(false);
+  const mounted = useRef(false);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     mounted.current = true;
     return () => (mounted.current = false); // Cleanup: mark as unmounted
   }, []);
 
-  return React.useCallback(
+  return useCallback(
     (...args) => (mounted.current ? dispatch(...args) : void 0), // Only call dispatch if the component is mounted
     [dispatch]
   );
 };
 
-const defaultInitialState = { status: "idle", data: null, error: null };
+const defaultInitialState = {
+  status: "idle",
+  data: null,
+  error: null,
+};
+
 function useAsync(initialState) {
-  const initialStateRef = React.useRef({
+  // Merge default state with the provided initial state
+  const initialStateRef = useRef({
     ...defaultInitialState,
-    ...initialState, // Merge default state with the provided initial state
+    ...initialState,
   });
 
   // Reducer to manage the state of the async operation
-  const [{ status, data, error }, setState] = React.useReducer(
-    (s, a) => ({ ...s, ...a }), // Merge the current state with the new updates
+  // Merge the current state with the new updates
+  const [{ status, data, error }, setState] = useReducer(
+    (s, a) => ({ ...s, ...a }),
     initialStateRef.current
   );
 
@@ -41,14 +48,18 @@ function useAsync(initialState) {
    * @returns {Promise} The same promise, allowing chaining.
    * @throws {Error} If the provided argument is not a promise.
    */
-  const run = React.useCallback(
+  const run = useCallback(
     (promise) => {
       if (!promise || !promise.then) {
         throw new Error(
           `The argument passed to useAsync().run must be a promise. Maybe a function that's passed isn't returning anything?`
         );
       }
-      safeSetState({ status: "pending" }); // Set status to "pending" before the promise resolves
+
+      // Set status to "pending" before the promise resolves
+      safeSetState({ status: "pending" });
+
+      // Return the promise and update state based on its resolution
       return promise.then(
         (data) => {
           safeSetState({ data, status: "resolved" }); // Update state with resolved data
@@ -67,16 +78,13 @@ function useAsync(initialState) {
    * Manually sets the data in the state.
    * @param {any} data - The data to set.
    */
-  const setData = React.useCallback(
-    (data) => safeSetState({ data }),
-    [safeSetState]
-  );
+  const setData = useCallback((data) => safeSetState({ data }), [safeSetState]);
 
   /**
    * Manually sets the error in the state.
    * @param {any} error - The error to set.
    */
-  const setError = React.useCallback(
+  const setError = useCallback(
     (error) => safeSetState({ error }),
     [safeSetState]
   );
@@ -84,7 +92,7 @@ function useAsync(initialState) {
   /**
    * Resets the state to its initial values.
    */
-  const reset = React.useCallback(
+  const reset = useCallback(
     () => safeSetState(initialStateRef.current),
     [safeSetState]
   );
