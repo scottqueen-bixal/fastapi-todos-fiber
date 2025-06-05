@@ -14,10 +14,7 @@ export const getTodos = async (setTodos) => {
     }
 
     const data = await response.json();
-    const sortedTodos = data.sort(
-      (a, b) => new Date(a.created_at) - new Date(b.created_at)
-    );
-    setTodos(sortedTodos);
+    setTodos(data);
   } catch (error) {
     console.error("Error fetching todos:", error);
   }
