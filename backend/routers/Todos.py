@@ -119,6 +119,16 @@ async def get_all_todos(
     result = await db.execute(stmt)
     todos = result.scalars().all()
 
+    # Sort todos based on the criteria
+    sorted_todos = sorted(
+        todos,
+        key=lambda todo: (
+            not todo.is_completed,
+            todo.updated_at if todo.is_completed else todo.created_at,
+        ),
+        reverse=True,  # Sort in descending order
+    )
+
     return [
         {
             "id": todo.id,
@@ -128,7 +138,5 @@ async def get_all_todos(
             "updated_at": todo.updated_at,
             "is_seed_data": todo.is_seed_data,
         }
-        for todo in todos
+        for todo in sorted_todos
     ]
-
-    # return todos
