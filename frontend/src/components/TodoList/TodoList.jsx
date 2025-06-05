@@ -1,5 +1,5 @@
-import Todo from "./Todo";
-import { updateTodo, deleteTodo } from "../utils";
+import Todo from "../Todo";
+import { updateTodo, deleteTodo } from "../../utils";
 import "./TodoList.css";
 
 const TodoList = ({ todos, setTodos, rowVirtualizer }) => {
