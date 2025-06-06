@@ -1,0 +1,8 @@
+# URLs for MCP Server Crawling
+FastAPI documentation: https://fastapi.tiangolo.com/
+Alembic documentation: https://alembic.sqlalchemy.org/
+SQLAlchemy documentation: https://docs.sqlalchemy.org/
+React.js documentation: https://reactjs.org/
+Vite documentation: https://vitejs.dev/
+Docker documentation: https://docs.docker.com/
+Adminer documentation: https://www.adminer.org/
