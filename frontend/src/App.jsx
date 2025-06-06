@@ -95,8 +95,9 @@ function App() {
   return (
     <div className="todo-app">
       <form className="todo-form" onSubmit={handleCreateTodo}>
-        <input ref={inputTask} />
-        <button type="submit">Create Todo</button>
+        <label htmlFor="todo-input" className="sr-only">Enter a new todo</label>
+        <input id="todo-input" ref={inputTask} placeholder="Enter a new todo" />
+        <button type="submit" aria-label="Create a new todo">Create Todo</button>
       </form>
       <div className="todo-list-container" ref={parentRef}>
         <div className="todo">
