@@ -33,26 +33,20 @@ function App() {
   const parentRef = useRef(null);
 
   /**
-   * Memoized list of all todos.
-   * @type {Array}
-   */
-  const memoizedTodos = useMemo(() => todos, [todos]);
-
-  /**
    * Memoized list of incomplete todos.
    * @type {Array}
    */
   const memoizedTodosList = useMemo(() => {
-    return memoizedTodos.filter((todo) => !todo.is_completed);
-  }, [memoizedTodos]);
+    return todos.filter((todo) => !todo.is_completed);
+  }, [todos]);
 
   /**
    * Memoized list of completed todos.
    * @type {Array}
    */
   const memoizedCompletedList = useMemo(() => {
-    return memoizedTodos.filter((todo) => todo.is_completed);
-  }, [memoizedTodos]);
+    return todos.filter((todo) => todo.is_completed);
+  }, [todos]);
 
   /**
    * Virtualizer for the list of incomplete todos.
@@ -95,9 +89,13 @@ function App() {
   return (
     <div className="todo-app">
       <form className="todo-form" onSubmit={handleCreateTodo}>
-        <label htmlFor="todo-input" className="sr-only">Enter a new todo</label>
+        <label htmlFor="todo-input" className="sr-only">
+          Enter a new todo
+        </label>
         <input id="todo-input" ref={inputTask} placeholder="Enter a new todo" />
-        <button type="submit" aria-label="Create a new todo">Create Todo</button>
+        <button type="submit" aria-label="Create a new todo">
+          Create Todo
+        </button>
       </form>
       <div className="todo-list-container" ref={parentRef}>
         <div className="todo">
