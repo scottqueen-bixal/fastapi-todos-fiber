@@ -93,11 +93,19 @@ function App() {
           Enter a new todo
         </label>
         <input id="todo-input" ref={inputTask} placeholder="Enter a new todo" />
-        <button type="submit" aria-label="Create a new todo">
+        <button
+          type="submit"
+          aria-label="Create a new todo"
+          data-testid="create-todo-button"
+        >
           Create Todo
         </button>
       </form>
-      <div className="todo-list-container" ref={parentRef}>
+      <div
+        className="todo-list-container"
+        ref={parentRef}
+        data-testid="todo-list-container"
+      >
         <div className="todo">
           <div
             style={{

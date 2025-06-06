@@ -15,10 +15,10 @@ test("renders App component", () => {
   expect(inputElement).to.exist;
 
   // Check if the create button is rendered
-  // const buttonElement = screen.getByRole("button", { name: /create todo/i });
-  // expect(buttonElement).to.exist;
+  const buttonElement = screen.getByTestId("create-todo-button");
+  expect(buttonElement).to.exist;
 
   // Check if the todo list container is rendered
-  // const todoListContainer = screen.getByClassName("todo-list-container");
-  // expect(todoListContainer).to.exist;
+  const todoListContainer = screen.getByTestId("todo-list-container");
+  expect(todoListContainer).to.exist;
 });
