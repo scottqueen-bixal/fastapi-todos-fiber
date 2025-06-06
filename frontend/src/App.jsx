@@ -103,8 +103,8 @@ function App() {
       </form>
       <div
         className="todo-list-container"
-        ref={parentRef}
         data-testid="todo-list-container"
+        ref={parentRef}
       >
         <div className="todo">
           <div
