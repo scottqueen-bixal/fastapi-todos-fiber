@@ -97,5 +97,13 @@ docker-compose cp backend:/app/alembic/versions ./alembic
    - Adminer: [http://localhost:8080](http://localhost:8080)
    - FastAPI: [http://localhost:8000](http://localhost:8000)
 
+## Submodule Setup
+To initialize and update the `mcp-crawl4ai-rag` submodule:
+
+```bash
+git submodule init
+git submodule update
+```
+
 ## License
 This project is licensed under the MIT License.
