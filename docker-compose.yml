@@ -82,6 +82,16 @@ services:
     networks:
       - internal
 
+  mcp-crawl4ai-rag:
+    image: mcp/crawl4ai-rag
+    build:
+      context: ./docs/mcp-crawl4ai-rag
+      dockerfile: Dockerfile
+    ports:
+      - 8051:8051
+    env_file:
+      - .env.mcp
+
 networks:
   internal:
     driver: bridge
