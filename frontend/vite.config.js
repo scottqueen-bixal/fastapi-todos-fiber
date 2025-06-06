@@ -11,5 +11,9 @@ export default defineConfig(({ mode }) => {
     server: {
       allowedHosts: [env.VITE_BASE_URL || "127.0.0.1", "localhost"],
     },
+    test: {
+      globals: true,
+      environment: "jsdom",
+    },
   };
 });
