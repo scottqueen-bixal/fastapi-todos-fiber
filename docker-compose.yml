@@ -89,6 +89,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8051:8051
+    expose:
+      - 8051
     env_file:
       - .env.mcp
 
