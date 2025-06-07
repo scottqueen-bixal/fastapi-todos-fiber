@@ -58,6 +58,10 @@ async def create_todo(
     db: Annotated[AsyncSession, Depends(get_async_db_session)],
     request_data: CreateTodo,
 ) -> CreateTodo:
+    # Validate that the task is not empty or just whitespace
+    if not request_data.task.strip():
+        raise HTTPException(status_code=400, detail="Todo task cannot be empty")
+
     todo = Todos(task=request_data.task, is_completed=request_data.is_completed)
     db.add(todo)
     await db.commit()
