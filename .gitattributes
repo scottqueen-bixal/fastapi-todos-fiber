@@ -1,0 +1,12 @@
+# Ensure JavaScript files are not marked as vendored
+*.js linguist-vendored=false
+*.jsx linguist-vendored=false
+*.ts linguist-vendored=false
+*.tsx linguist-vendored=false
+
+# Ensure Python files are properly detected
+*.py linguist-vendored=false
+
+# Mark certain directories as vendored if they contain third-party code
+node_modules/** linguist-vendored=true
+**/node_modules/** linguist-vendored=true
