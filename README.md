@@ -1,4 +1,4 @@
-# Dopestack Project
+# FASTAPI + React + Virtualized Rendering
 
 ## Overview
 This project is a multi-service application that includes a PostgreSQL database, an Adminer interface, and a FastAPI backend. The services are orchestrated using Docker Compose.
