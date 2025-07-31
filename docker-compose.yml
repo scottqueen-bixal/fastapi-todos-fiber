@@ -81,6 +81,10 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:
       - internal
+    labels:
+    - "traefik.http.routers.traefik.rule=Host(`traefik.todo.com`)"
+    - "traefik.http.routers.traefik.service=api@internal"
+    - "traefik.http.routers.traefik.entrypoints=web"
 
   mcp-crawl4ai-rag:
     image: mcp/crawl4ai-rag
