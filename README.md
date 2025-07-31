@@ -58,9 +58,9 @@ entrypoint.sh
    ```
 
 6. **Access the application:**
-   - **Frontend:** [http://todo.com](http://todo.com)
+   - **Frontend:** [http://todo.com](http://todo.com) || [http://localhost:5173](http://localhost:5173)
    - **Backend API:** [http://todo.com/api](http://todo.com/api)
-   - **API Swagger Docs:** [http://todo.com/docs](http://todo.com:8000/docs)
+   - **API Swagger Docs:** [http://todo.com/docs](http://todo.com/docs)
    - **Adminer (DB UI):** [http://todo.com:8080](http://todo.com:8080)
    - **Traefik Dashboard:** [http://traefik.todo.com](http://traefik.todo.com)
 
