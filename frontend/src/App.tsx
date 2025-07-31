@@ -9,7 +9,6 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { getTodos, createTodo } from "./utils";
 import "./App.css";
 import type { Todo } from "./components/types";
-import type { TodoListProps } from "./components/types";
 
 /**
  * Lazy-loaded TodoList component for displaying todos.
