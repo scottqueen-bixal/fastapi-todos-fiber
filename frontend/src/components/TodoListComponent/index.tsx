@@ -1,6 +1,13 @@
-import Todo from "../Todo";
+import TodoComponent from "../TodoComponent";
 import { updateTodo, deleteTodo } from "../../utils";
 import "./index.css";
+import type { TodoListProps } from "../types";
+
+type VirtualItemStyle = React.CSSProperties & {
+  "--virtual-item-height"?: string;
+  "--virtual-item-translate-y"?: string;
+};
+
 
 /**
  * A functional component that renders a list of todos using virtualization.
@@ -10,7 +17,7 @@ import "./index.css";
  * @param {Object} props.rowVirtualizer - Virtualizer object for managing visible items.
  * @returns {JSX.Element} The rendered TodoList component.
  */
-const TodoList = ({ todos, setTodos, rowVirtualizer }) => {
+const TodoListComponent: React.FC<TodoListProps> = ({ todos, setTodos, rowVirtualizer }) => {
   {
     /* Only the visible items in the virtualizer, manually positioned to be in view */
   }
@@ -18,16 +25,17 @@ const TodoList = ({ todos, setTodos, rowVirtualizer }) => {
     <div className="todo-list">
       {rowVirtualizer.getVirtualItems().map((virtualItem) => {
         const item = todos[virtualItem.index];
+        const style: VirtualItemStyle = {
+          "--virtual-item-height": `${virtualItem.size}px`,
+          "--virtual-item-translate-y": `${virtualItem.start}px`,
+        };
         return (
           <div
             className="virtual-item"
             key={`todo-${virtualItem.key}`}
-            style={{
-              "--virtual-item-height": `${virtualItem.size}px`,
-              "--virtual-item-translate-y": `${virtualItem.start}px`,
-            }}
+            style={style}
           >
-            <Todo
+            <TodoComponent
               key={`todo-${item.id}`}
               todo={item}
               onToggle={(item) => updateTodo(item, setTodos)}
@@ -40,4 +48,4 @@ const TodoList = ({ todos, setTodos, rowVirtualizer }) => {
   );
 };
 
-export default TodoList;
+export default TodoListComponent;

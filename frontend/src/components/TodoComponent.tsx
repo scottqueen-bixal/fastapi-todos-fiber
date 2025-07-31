@@ -1,3 +1,5 @@
+import type { Todo } from './types';
+
 /**
  * A functional component that represents a single todo item.
  * @param {Object} props - The props object.
@@ -9,7 +11,7 @@
  * @param {Function} props.onToggle - Callback function to handle toggling the completion status of the todo.
  * @returns {JSX.Element} The rendered todo component.
  */
-const Todo = ({ todo, onDelete, onToggle }) => {
+const TodoComponent: React.FC<{ todo: Todo; onDelete: (id: Partial<Todo>) => void; onToggle: (todo: Partial<Todo>) => void }> = ({ todo, onDelete, onToggle }) => {
   console.log(todo, todo.id);
   return (
     <div>
@@ -27,4 +29,4 @@ const Todo = ({ todo, onDelete, onToggle }) => {
   );
 };
 
-export default Todo;
+export default TodoComponent;
