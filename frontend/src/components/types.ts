@@ -10,7 +10,7 @@ export type TodoListProps = {
   rowVirtualizer: {
     getVirtualItems: () => Array<{
       index: number;
-      key: string;
+      key: string | number | bigint;
       size: number;
       start: number;
     }>;
