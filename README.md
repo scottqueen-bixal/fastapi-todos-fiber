@@ -26,39 +26,44 @@ migrations/
 entrypoint.sh
 ```
 
-## Services
+## Quick Start Guide
 
-### Database (PostgreSQL)
-- **Image**: `postgres`
-- **Environment Variables**:
-  - `POSTGRES_USER`: `db_user`
-  - `POSTGRES_PASSWORD`: `password`
-  - `POSTGRES_DB`: `postgres`
-- **Volumes**:
-  - `pgdata:/var/lib/postgresql/data`
-- **Ports**:
-  - `5432:5432`
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd
+   ```
 
-### Adminer
-- **Image**: `adminer:latest`
-- **Environment Variables**:
-  - `ADMINER_DEFAULT_DB_DRIVER`: `postgresql`
-  - `ADMINER_DEFAULT_DB_HOST`: `db`
-  - `ADMINER_DEFAULT_DB_NAME`: `postgres`
-- **Ports**:
-  - `8080:8080`
-- **Volumes**:
-  - `./adminer/adminer.css:/var/www/html/adminer.css`
+2. **(Optional) Initialize submodules:**
+   ```bash
+   git submodule init
+   git submodule update
+   ```
 
-### FastAPI Backend
-- **Build Context**: `.`
-- **Dockerfile**: `Dockerfile`
-- **Ports**:
-  - `8000:8000`
-- **Depends On**:
-  - `db`
-- **Entrypoint**:
-  - `entrypoint.sh`: Handles database readiness, Alembic migrations, and application startup.
+3. **Copy and configure environment variables:**
+   - Copy `.env.example` to `.env` and edit as needed (create `.env.example` if not present).
+   - For the `mcp-crawl4ai-rag` service, copy `.env.mcp.example` to `.env.mcp` and edit as needed.
+
+4. **Update `/etc/hosts`:**
+   - Add the following line to your `/etc/hosts` file:
+
+     ```bash
+     127.0.0.1 todo.com
+     127.0.0.1 traefik.todo.com
+     ```
+
+5. **Build and start all services:**
+   ```bash
+   docker-compose up --build
+   ```
+
+6. **Access the application:**
+   - **Frontend:** [http://todo.com](http://todo.com)
+   - **Backend API:** [http://todo.com/api](http://todo.com/api)
+   - **API Swagger Docs:** [http://todo.com/docs](http://todo.com:8000/docs)
+   - **Adminer (DB UI):** [http://todo.com:8080](http://todo.com:8080)
+   - **Traefik Dashboard:** [http://traefik.todo.com](http://traefik.todo.com)
+
 
 ## FastAPI Application
 The FastAPI application is located in the `app` directory and follows a modular structure:
