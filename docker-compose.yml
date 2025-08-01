@@ -49,8 +49,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ./frontend:/app
-      - node_modules:/app/node_modules
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
     ports:
       - 5173:5173
     depends_on:
@@ -103,4 +103,3 @@ networks:
 
 volumes:
   pgdata:
-  node_modules:
