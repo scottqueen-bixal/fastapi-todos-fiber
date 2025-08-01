@@ -31,5 +31,11 @@
   position: relative;
   height: var(--virtual-group-height);
   width: 100%;
+  display: flex;
+}
+
+.todo-item-wrapper {
+  display: flex;
+  align-items: center;
 }
 
