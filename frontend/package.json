@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engine": "24",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -28,7 +29,7 @@
     "globals": "^16.0.0",
     "jsdom": "^26.1.0",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5",
+    "vite": "^7.0.6",
     "vitest": "^3.2.2"
   }
 }

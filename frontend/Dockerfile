@@ -1,11 +1,8 @@
-FROM node:24-slim
+FROM node:24-alpine
 
 WORKDIR /app
 
-# Copy package files and the script
 COPY package.json ./
-
-# Install dependencies
 RUN npm install
 
 # Copy the rest of the app's code
