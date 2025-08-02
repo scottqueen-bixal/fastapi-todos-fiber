@@ -1,5 +1,4 @@
 import type { Todo } from './types';
-import DeleteButton from './DeleteButtonComponent';
 
 /**
  * A functional component that represents a single todo item.
@@ -16,6 +15,7 @@ const TodoComponent: React.FC<{ todo: Todo; onDelete: (id: Partial<Todo>) => voi
   console.log(todo, todo.id);
   return (
     <div className='todo-item-wrapper'>
+      <div className={`todo-item-task ${todo.is_completed ? "completed" : ""}`}>{todo.task}</div>
       <input
         className='todo-item-checkbox'
         type="checkbox"
@@ -25,8 +25,7 @@ const TodoComponent: React.FC<{ todo: Todo; onDelete: (id: Partial<Todo>) => voi
           onToggle({ id: todo.id, is_completed: !todo.is_completed })
         }
       />
-      <div className={`todo-item-task ${todo.is_completed ? "completed" : ""}`}>{todo.task}</div>
-      <DeleteButton onDelete={() => onDelete({ id: todo.id })} />
+      <button className='delete-button' onClick={() => onDelete({ id: todo.id })}>Delete</button>
     </div>
   );
 };
