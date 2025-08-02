@@ -57,12 +57,6 @@ function App() {
   } as React.CSSProperties;
 
   /**
-   * State to control the modal open/close status.
-   * @type {[boolean, Function]} isModalOpen - The current modal status and a function to update it.
-   */
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  /**
    * Handles the creation of a new todo.
    * @param {React.FormEvent} e - The form submission event.
    */
@@ -72,7 +66,6 @@ function App() {
       createTodo(inputTask.current.value, setTodos);
       inputTask.current.value = "";
       inputTask.current.focus();
-      setIsModalOpen(false); // Close modal after submission
     }
   };
 
@@ -85,38 +78,24 @@ function App() {
 
   return (
     <div className="todo-app">
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="open-modal-button"
-        aria-label="Open Create Todo Modal"
-      >
-        Add Todo
-      </button>
-
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <form className="todo-form" onSubmit={handleCreateTodo}>
-              <label htmlFor="todo-input" className="sr-only">
-                Enter a new todo
-              </label>
-              <input
-                id="todo-input"
-                ref={inputTask}
-                placeholder="Enter a new todo"
-                autoComplete="off"
-              />
-              <button
-                type="submit"
-                className="create-todo-button sr-only"
-                aria-label="Create a new todo"
-              >
-                Create Todo
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      <form className="todo-form" onSubmit={handleCreateTodo}>
+        <label htmlFor="todo-input" className="sr-only">
+          Enter a new todo
+        </label>
+        <input
+          id="todo-input"
+          ref={inputTask}
+          placeholder="Enter a new todo"
+          autoComplete="off"
+        />
+        <button
+          type="submit"
+          className="create-todo-button sr-only"
+          aria-label="Create a new todo"
+        >
+          Create Todo
+        </button>
+      </form>
 
       <div
         className="todo-list-container"
