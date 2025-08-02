@@ -16,6 +16,7 @@ const TodoComponent: React.FC<{ todo: Todo; onDelete: (id: Partial<Todo>) => voi
   return (
     <div className='todo-item-wrapper'>
       <div className={`todo-item-task ${todo.is_completed ? "completed" : ""}`}>{todo.task}</div>
+      <div className='todo-item-actions'>
       <input
         className='todo-item-checkbox'
         type="checkbox"
@@ -26,6 +27,7 @@ const TodoComponent: React.FC<{ todo: Todo; onDelete: (id: Partial<Todo>) => voi
         }
       />
       <button className='delete-button' onClick={() => onDelete({ id: todo.id })}>Delete</button>
+      </div>
     </div>
   );
 };
