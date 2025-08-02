@@ -57,7 +57,7 @@ function App() {
   const rowVirtualizerTodos = useVirtualizer({
     count: memoizedTodosList.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 35,
+    estimateSize: () => 75,
   });
 
   const virtualStyleTodos: React.CSSProperties = {
@@ -71,12 +71,18 @@ function App() {
   const rowVirtualizerCompleted = useVirtualizer({
     count: memoizedCompletedList.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 35,
+    estimateSize: () => 75,
   });
 
   const virtualStyleCompleted: React.CSSProperties = {
     "--virtual-group-height": `${rowVirtualizerCompleted.getTotalSize()}px`,
   } as React.CSSProperties;
+
+  /**
+   * State to control the modal open/close status.
+   * @type {[boolean, Function]} isModalOpen - The current modal status and a function to update it.
+   */
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   /**
    * Handles the creation of a new todo.
@@ -88,6 +94,7 @@ function App() {
       createTodo(inputTask.current.value, setTodos);
       inputTask.current.value = "";
       inputTask.current.focus();
+      setIsModalOpen(false); // Close modal after submission
     }
   };
 
@@ -100,19 +107,39 @@ function App() {
 
   return (
     <div className="todo-app">
-      <form className="todo-form" onSubmit={handleCreateTodo}>
-        <label htmlFor="todo-input" className="sr-only">
-          Enter a new todo
-        </label>
-        <input id="todo-input" ref={inputTask} placeholder="Enter a new todo" />
-        <button
-          type="submit"
-          aria-label="Create a new todo"
-          data-testid="create-todo-button"
-        >
-          Create Todo
-        </button>
-      </form>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="open-modal-button"
+        aria-label="Open Create Todo Modal"
+      >
+        Add Todo
+      </button>
+
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <form className="todo-form" onSubmit={handleCreateTodo}>
+              <label htmlFor="todo-input" className="sr-only">
+                Enter a new todo
+              </label>
+              <input
+                id="todo-input"
+                ref={inputTask}
+                placeholder="Enter a new todo"
+                autoComplete="off"
+              />
+              <button
+                type="submit"
+                className="create-todo-button sr-only"
+                aria-label="Create a new todo"
+              >
+                Create Todo
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
       <div
         className="todo-list-container"
         data-testid="todo-list-container"
@@ -135,7 +162,7 @@ function App() {
           <div
             style={virtualStyleCompleted}
           >
-            <Suspense fallback={<div>Loading Todos...</div>}>
+            <Suspense fallback={<div>Loading Completed Tasks...</div>}>
               <TodoList
                 todos={memoizedCompletedList}
                 setTodos={setTodos}
