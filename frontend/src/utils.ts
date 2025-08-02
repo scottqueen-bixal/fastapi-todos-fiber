@@ -1,13 +1,14 @@
 // This file contains utility functions for fetching, creating, updating, and deleting todos.
 // It uses the Fetch API to interact with a backend service.
 import { todosPath } from "./constants";
+import type { Todo } from "./components/types";
 
 /**
  * Fetches the list of todos from the backend and updates the state.
  * @param {Function} setTodos - Function to update the state with the fetched todos.
  * @returns {Promise<void>} A promise that resolves when the todos are fetched.
  */
-const getTodos = async (setTodos) => {
+const getTodos = async (setTodos: (todos: Todo[]) => void): Promise<void> => {
   try {
     const response = await fetch(todosPath, {
       method: "GET",
@@ -20,7 +21,7 @@ const getTodos = async (setTodos) => {
       throw new Error("Failed to fetch todos");
     }
 
-    const data = await response.json();
+    const data: Todo[] = await response.json();
     setTodos(data);
   } catch (error) {
     console.error("Error fetching todos:", error);
@@ -33,7 +34,7 @@ const getTodos = async (setTodos) => {
  * @param {Function} setTodos - Function to update the state with the updated todos.
  * @returns {Promise<void>} A promise that resolves when the todo is created.
  */
-const createTodo = async (task, setTodos) => {
+const createTodo = async (task: string, setTodos: (todos: Todo[]) => void): Promise<void> => {
   const newTodo = { task };
 
   try {
@@ -64,7 +65,7 @@ const createTodo = async (task, setTodos) => {
  * @param {Function} setTodos - Function to update the state with the updated todos.
  * @returns {Promise<void>} A promise that resolves when the todo is updated.
  */
-const updateTodo = async (updatedTodo, setTodos) => {
+const updateTodo = async (updatedTodo: Partial<Todo>, setTodos: (todos: Todo[]) => void): Promise<void> => {
   const { id } = updatedTodo;
 
   try {
@@ -92,7 +93,7 @@ const updateTodo = async (updatedTodo, setTodos) => {
  * @param {Function} setTodos - Function to update the state with the updated todos.
  * @returns {Promise<void>} A promise that resolves when the todo is deleted.
  */
-const deleteTodo = async (id, setTodos) => {
+const deleteTodo = async (id: number, setTodos: (todos: Todo[]) => void): Promise<void> => {
   try {
     const response = await fetch(`${todosPath}/${id}`, {
       method: "DELETE",
@@ -111,4 +112,34 @@ const deleteTodo = async (id, setTodos) => {
   }
 };
 
-export { getTodos, createTodo, updateTodo, deleteTodo };
+/**
+ * Edits an existing todo's task and updates the state with the updated list of todos.
+ * @param {Object} editedTodo - The edited todo object.
+ * @param {number} editedTodo.id - The unique identifier of the todo to edit.
+ * @param {string} editedTodo.task - The updated task description.
+ * @param {Function} setTodos - Function to update the state with the updated todos.
+ * @returns {Promise<void>} A promise that resolves when the todo is edited.
+ */
+const editTodo = async (editedTodo: Partial<Todo>, setTodos: (todos: Todo[]) => void) => {
+  const { id } = editedTodo;
+
+  try {
+    const response = await fetch(`${todosPath}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedTodo),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to edit todo");
+    }
+
+    getTodos(setTodos);
+  } catch (error) {
+    console.error("Error editing todo:", error);
+  }
+};
+
+export { getTodos, createTodo, updateTodo, deleteTodo, editTodo };

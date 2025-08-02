@@ -1,5 +1,5 @@
 import TodoComponent from "../TodoComponent";
-import { updateTodo, deleteTodo } from "../../utils";
+import { updateTodo, deleteTodo, editTodo } from "../../utils";
 import "./index.css";
 import type { TodoListProps } from "../types";
 
@@ -40,6 +40,7 @@ const TodoListComponent: React.FC<TodoListProps> = ({ todos, setTodos, rowVirtua
               todo={item}
               onToggle={(item) => updateTodo(item, setTodos)}
               onDelete={() => deleteTodo(item.id, setTodos)}
+              onEdit={(item) => editTodo(item, setTodos)}
             />
           </div>
         );
