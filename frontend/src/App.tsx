@@ -3,7 +3,6 @@
  * Handles the creation, display, and management of todos.
  */
 
-
 import { useEffect, useState, useRef, useMemo, lazy, Suspense } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { getTodos, createTodo } from "./utils";
@@ -21,6 +20,12 @@ function App() {
    * @type {[Array, Function]} todos - The current list of todos and a function to update it.
    */
   const [todos, setTodos] = useState<Todo[]>(() => []);
+
+  /**
+   * State to track if todos have been seeded.
+   * @type {[boolean, Function]} isSeeded - A boolean indicating if todos are seeded and a function to update it.
+   */
+  const [isSeeded, setIsSeeded] = useState(false);
 
   /**
    * Ref for the input field to create a new todo.
@@ -76,6 +81,75 @@ function App() {
     getTodos(setTodos);
   }, []);
 
+  /**
+   * Checks if seeded data exists in the API and updates the isSeeded state.
+   */
+  useEffect(() => {
+    const checkSeededData = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/todos");
+        const data = await response.json();
+        if (data.length > 0) {
+          setIsSeeded(true);
+        }
+      } catch (error) {
+        console.error("Error checking seeded data:", error);
+      }
+    };
+
+    checkSeededData();
+  }, []);
+
+  /**
+   * Handles seeding 100,000 todos by calling the API endpoint.
+   */
+  const handleSeedTodos = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/todos/seed?count=10000",
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      alert("10,000 todos have been successfully created!");
+      setIsSeeded(true);
+      getTodos(setTodos);
+    } catch (error) {
+      console.error("Error seeding todos:", error);
+      alert("Failed to seed todos. Please try again.");
+    }
+  };
+
+  /**
+   * Handles seeding 100,000 todos by calling the API endpoint.
+   */
+  const handleDeleteSeedTodos = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/todos/seed/delete",
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      alert("Seeded todos have been successfully deleted!");
+      setIsSeeded(false);
+      getTodos(setTodos);
+    } catch (error) {
+      console.error("Error deleting todos:", error);
+      alert("Failed to delete todos. Please try again.");
+    }
+  };
+
   return (
     <div className="todo-app">
       <form className="todo-form" onSubmit={handleCreateTodo}>
@@ -114,6 +188,13 @@ function App() {
           </div>
         </div>
       </div>
+      {isSeeded ? (
+        <button className="delete seed-todos-button" onClick={handleDeleteSeedTodos}>
+          Click to delete seeded todos
+        </button>
+      ) : <button className="seed-todos-button" onClick={handleSeedTodos}>
+          Click to Seed 10,000 todos
+        </button>}
     </div>
   );
 }
