@@ -25,7 +25,7 @@ const TodoComponent: React.FC<{ todo: Todo; onDelete: (id: Partial<Todo>) => voi
           onToggle({ id: todo.id, is_completed: !todo.is_completed })
         }
       />
-      <div className='todo-item-task'>{todo.task}</div>
+      <div className={`todo-item-task ${todo.is_completed ? "completed" : ""}`}>{todo.task}</div>
       <DeleteButton onDelete={() => onDelete({ id: todo.id })} />
     </div>
   );

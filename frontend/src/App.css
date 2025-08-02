@@ -81,8 +81,7 @@
   height: 100vh;
 }
 
-.todo,
-.completed {
+.todo {
   font-family: "Rock Salt", cursive;
   font-weight: 400;
   font-style: normal;
@@ -100,7 +99,7 @@
   text-align: center;
 }
 
-.completed .todo-item-task {
+.todo-item-task.completed  {
   text-decoration: line-through;
   color: rgba(119, 136, 153, 0.2);
 }

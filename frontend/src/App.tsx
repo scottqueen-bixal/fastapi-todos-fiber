@@ -35,23 +35,15 @@ function App() {
   const parentRef = useRef<HTMLDivElement>(null);
 
   /**
-   * Memoized list of incomplete todos.
+   * Memoized list of todos.
    * @type {Array}
    */
   const memoizedTodosList = useMemo(() => {
-    return todos.filter((todo) => !todo.is_completed);
+    return todos;
   }, [todos]);
 
   /**
-   * Memoized list of completed todos.
-   * @type {Array}
-   */
-  const memoizedCompletedList = useMemo(() => {
-    return todos.filter((todo) => todo.is_completed);
-  }, [todos]);
-
-  /**
-   * Virtualizer for the list of incomplete todos.
+   * Virtualizer for the list of todos.
    * @type {Object}
    */
   const rowVirtualizerTodos = useVirtualizer({
@@ -62,20 +54,6 @@ function App() {
 
   const virtualStyleTodos: React.CSSProperties = {
     "--virtual-group-height": `${rowVirtualizerTodos.getTotalSize()}px`,
-  } as React.CSSProperties;
-
-  /**
-   * Virtualizer for the list of completed todos.
-   * @type {Object}
-   */
-  const rowVirtualizerCompleted = useVirtualizer({
-    count: memoizedCompletedList.length,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => 75,
-  });
-
-  const virtualStyleCompleted: React.CSSProperties = {
-    "--virtual-group-height": `${rowVirtualizerCompleted.getTotalSize()}px`,
   } as React.CSSProperties;
 
   /**
@@ -146,27 +124,12 @@ function App() {
         ref={parentRef}
       >
         <div className="todo">
-          <div
-            style={virtualStyleTodos}
-          >
+          <div style={virtualStyleTodos}>
             <Suspense fallback={<div>Loading Todos...</div>}>
               <TodoList
                 todos={memoizedTodosList}
                 setTodos={setTodos}
                 rowVirtualizer={rowVirtualizerTodos}
-              />
-            </Suspense>
-          </div>
-        </div>
-        <div className="completed">
-          <div
-            style={virtualStyleCompleted}
-          >
-            <Suspense fallback={<div>Loading Completed Tasks...</div>}>
-              <TodoList
-                todos={memoizedCompletedList}
-                setTodos={setTodos}
-                rowVirtualizer={rowVirtualizerCompleted}
               />
             </Suspense>
           </div>
