@@ -39,7 +39,7 @@ const TodoListComponent: React.FC<TodoListProps> = ({ todos, setTodos, rowVirtua
               key={`todo-${item.id}`}
               todo={item}
               onToggle={(item) => updateTodo(item, setTodos)}
-              onDelete={() => deleteTodo(item.id, setTodos)}
+              onDelete={() => deleteTodo(Number(item.id), setTodos)}
               onEdit={(item) => editTodo(item, setTodos)}
             />
           </div>
