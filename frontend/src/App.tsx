@@ -158,6 +158,7 @@ function App() {
         </label>
         <input
           id="todo-input"
+          className="todo-input"
           ref={inputTask}
           placeholder="Enter a new todo"
           autoComplete="off"

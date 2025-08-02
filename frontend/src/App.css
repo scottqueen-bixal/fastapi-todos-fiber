@@ -10,7 +10,8 @@
   background-color: #242424;
 }
 
-#todo-input {
+.todo-input,
+.todo-item-edit-input {
   width: 100%;
   height: 2.5rem;
   background: none;
@@ -22,7 +23,7 @@
   line-height: 2;
 }
 
-#todo-input::placeholder {
+.todo-input::placeholder {
   color: rgba(119, 136, 153, 0.2);
   font-family: "Rock Salt", cursive;
   font-weight: 400;
@@ -31,11 +32,12 @@
   line-height: 2;
 }
 
-#todo-input:focus {
+.todo-input:focus,
+.todo-item-edit-input:focus {
   outline: none;
 }
 
-#todo-input:focus::placeholder {
+.todo-input:focus::placeholder {
   color: transparent;
 }
 
