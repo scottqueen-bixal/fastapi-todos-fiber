@@ -89,19 +89,16 @@
   margin-left: 20px;
 }
 
-.seed-todos-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  background-color: transparent;
-  color: white;
+.todo-item-actions button {
+  background: url('./assets/x-icon.svg') no-repeat center center;
+  background-size: contain;
   border: none;
+  width: 1rem;
+  height: 1rem;
   cursor: pointer;
-  background-color: black;
-  padding: 10px;
 }
 
-.seed-todos-button:hover {
-  background-color:rgba(119, 136, 153, 0.2);
+.todo-item-actions button:hover {
+  opacity: 0.8;
 }
 
