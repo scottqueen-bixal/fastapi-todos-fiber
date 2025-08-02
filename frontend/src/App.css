@@ -118,3 +118,20 @@
   background-size: contain;
 }
 
+.seed-todos-button {
+  position: absolute;
+  padding: 10px 20px;
+  top: 0;
+  right: 0;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #000;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.seed-todos-button:hover {
+  background-color: rgba(119, 136, 153, 0.2);
+}
+
