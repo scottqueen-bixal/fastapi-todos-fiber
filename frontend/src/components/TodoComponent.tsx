@@ -45,18 +45,20 @@ const TodoComponent: React.FC<{ todo: Todo; onDelete: (id: Partial<Todo>) => voi
           {todo.task}
         </div>
       )}
-      <div className='todo-item-actions'>
-        <input
-          className='todo-item-checkbox'
-          type='checkbox'
-          id={todo.id}
-          checked={todo.is_completed}
-          onChange={() =>
-            onToggle({ id: todo.id, is_completed: !todo.is_completed })
-          }
-        />
-        <button className='delete-button' onClick={() => onDelete({ id: todo.id })}></button>
-      </div>
+      {!isEditing && (
+        <div className='todo-item-actions'>
+          <input
+            className='todo-item-checkbox'
+            type='checkbox'
+            id={todo.id}
+            checked={todo.is_completed}
+            onChange={() =>
+              onToggle({ id: todo.id, is_completed: !todo.is_completed })
+            }
+          />
+          <button className='delete-button' onClick={() => onDelete({ id: todo.id })}></button>
+        </div>
+      )}
     </div>
   );
 };
