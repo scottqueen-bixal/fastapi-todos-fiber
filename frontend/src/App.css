@@ -102,3 +102,19 @@
   opacity: 0.8;
 }
 
+.todo-item-actions input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background: url('./assets/checkmark-icon.svg') no-repeat center center;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+}
+
+.todo-item-actions input[type="checkbox"]:checked {
+  background: url('./assets/checkmark-icon.svg') no-repeat center center;
+  background-size: contain;
+}
+
