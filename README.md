@@ -3,42 +3,6 @@
 ## Overview
 This project is a multi-service application that includes a PostgreSQL database, a FastAPI backend, and a React frontend with virtualized rendering for efficient performance. The services are orchestrated using Docker Compose.
 
-## Project Structure
-```
-docker-compose.yml
-pyproject.toml
-README.md
-uv.lock
-adminer/
-    adminer.css
-backend/
-    __init__.py
-    db.py
-    main.py
-    settings.py
-    utils.py
-    internal/
-        admin.py
-    models/
-        Todos.py
-    routers/
-        Todos.py
-    schemas/
-        Todos.py
-frontend/
-    src/
-        App.tsx
-        components/
-            TodoComponent.tsx
-            TodoListComponent/
-        utils.ts
-        index.css
-migrations/
-    env.py
-    versions/
-entrypoint.sh
-```
-
 ## Quick Start Guide
 
 1. **Clone the repository:**
