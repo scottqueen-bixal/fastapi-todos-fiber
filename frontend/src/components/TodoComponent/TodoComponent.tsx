@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import type { Todo } from './types';
+import type { Todo } from '../types';
+import './index.css';
 
 /**
  * A functional component that represents a single todo item.

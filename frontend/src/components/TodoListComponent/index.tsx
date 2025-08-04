@@ -1,4 +1,4 @@
-import TodoComponent from "../TodoComponent";
+import TodoComponent from "../TodoComponent/TodoComponent";
 import { updateTodo, deleteTodo, editTodo } from "../../utils";
 import "./index.css";
 import type { TodoListProps } from "../types";

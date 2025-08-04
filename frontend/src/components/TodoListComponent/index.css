@@ -7,3 +7,11 @@
   height: var(--virtual-item-height);
   transform: translateY(var(--virtual-item-translate-y));
 }
+
+.todo-list-container {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  overflow: auto;
+  height: 100vh;
+}
