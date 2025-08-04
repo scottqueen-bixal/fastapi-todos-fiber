@@ -1,7 +1,7 @@
 # FASTAPI + React + Virtualized Rendering
 
 ## Overview
-This project is a multi-service application that includes a PostgreSQL database, an Adminer interface, and a FastAPI backend. The services are orchestrated using Docker Compose.
+This project is a multi-service application that includes a PostgreSQL database, a FastAPI backend, and a React frontend with virtualized rendering for efficient performance. The services are orchestrated using Docker Compose.
 
 ## Project Structure
 ```
@@ -11,15 +11,28 @@ README.md
 uv.lock
 adminer/
     adminer.css
-app/
+backend/
     __init__.py
     db.py
-    dependencies.py
     main.py
+    settings.py
+    utils.py
+    internal/
+        admin.py
+    models/
+        Todos.py
     routers/
-        todos.py
+        Todos.py
     schemas/
         Todos.py
+frontend/
+    src/
+        App.tsx
+        components/
+            TodoComponent.tsx
+            TodoListComponent/
+        utils.ts
+        index.css
 migrations/
     env.py
     versions/
@@ -30,8 +43,8 @@ entrypoint.sh
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repo-url>
-   cd
+   git clone git@github.com:scottqueen-bixal/fastapi-todos-fiber.git
+   cd fastapi-todos-fiber
    ```
 
 2. **(Optional) Initialize submodules:**
@@ -41,7 +54,7 @@ entrypoint.sh
    ```
 
 3. **Copy and configure environment variables:**
-   - Copy `.env.example` to `.env` and edit as needed (create `.env.example` if not present).
+   - Copy `.env.example` to `.env` and edit as needed.
    - For the `mcp-crawl4ai-rag` service, copy `.env.mcp.example` to `.env.mcp` and edit as needed.
 
 4. **Update `/etc/hosts`:**
@@ -64,14 +77,20 @@ entrypoint.sh
    - **Adminer (DB UI):** [http://todo.com:8080](http://todo.com:8080)
    - **Traefik Dashboard:** [http://traefik.todo.com](http://traefik.todo.com)
 
+## Frontend Application
+The React frontend is located in the `frontend` directory and includes the following key components:
 
-## FastAPI Application
-The FastAPI application is located in the `app` directory and follows a modular structure:
+- `App.tsx`: Main application file.
+- `TodoComponent.tsx`: Component for individual todo items.
+- `TodoListComponent/`: Component for rendering the list of todos with virtualization.
+- `utils.ts`: Utility functions for API interactions.
+
+## Backend Application
+The FastAPI backend is located in the `backend` directory and follows a modular structure:
 
 - `main.py`: Entry point of the application.
 - `db.py`: Database configuration and session management.
-- `dependencies.py`: Contains shared dependencies.
-- `routers/todos.py`: Routes for managing todos.
+- `routers/Todos.py`: Routes for managing todos.
 - `schemas/Todos.py`: Pydantic models for todos.
 
 ## Migrations
@@ -88,10 +107,6 @@ To apply migrations:
 docker-compose exec backend uv run alembic upgrade head
 ```
 
-```bash
-docker-compose cp backend:/app/alembic/versions ./alembic
-```
-
 ## How to Run
 1. Ensure Docker and Docker Compose are installed on your system.
 2. Build and start the services:
@@ -101,14 +116,7 @@ docker-compose cp backend:/app/alembic/versions ./alembic
 3. Access the services:
    - Adminer: [http://localhost:8080](http://localhost:8080)
    - FastAPI: [http://localhost:8000](http://localhost:8000)
-
-## Submodule Setup
-To initialize and update the `mcp-crawl4ai-rag` submodule:
-
-```bash
-git submodule init
-git submodule update
-```
+   - Frontend: [http://localhost:5173](http://localhost:5173)
 
 ## License
 This project is licensed under the MIT License.
